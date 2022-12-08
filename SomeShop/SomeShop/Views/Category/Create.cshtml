@@ -1,0 +1,40 @@
+﻿@model SomeShop.Models.Category
+
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (User.Identity?.IsAuthenticated ?? false)
+{
+
+}
+else
+{
+    Context.Response.Redirect("/Account/Login");
+}
+
+@{
+    ViewData["Title"] = "Create";
+}
+
+<h1>Add New Category</h1>
+
+<hr />
+<div class="row">
+    <div class="form">
+        <form class="login-form" asp-action="Create">
+            <div asp-validation-summary="All" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <button class="btn btn-primary mt-2">Add Category</button>
+            </div>
+        </form>
+    </div>
+</div>
+

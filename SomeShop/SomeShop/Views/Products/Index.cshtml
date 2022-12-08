@@ -1,0 +1,122 @@
+﻿@model IEnumerable<Product>
+
+<style>
+    .card {
+        position: sticky;
+        width: 330px;
+        height: 600px;
+    }
+
+    .face {
+        width: 300px;
+        height: 400px;
+        background: white;
+        transition: .4s;
+    }
+
+    .face1 {
+        position: sticky;
+        display: flex;
+        justify-content: center;
+        align-content: center;
+        align-items: center;
+        z-index: 1;
+        transform: translateY(100px);
+    }
+
+    .card:hover .face.face1 {
+        transform: translateY(0);
+    }
+
+    .face.face1 .content {
+        opacity: .2;
+        transition: 0.5s;
+        text-align: center;
+    }
+
+    .card:hover .face.face1 .content {
+        opacity: 1;
+    }
+
+    .face.face1 .content i {
+        font-size: 3em;
+        color: white;
+        display: inline-block;
+    }
+
+    .face.face1 .content h3 {
+        font-size: 1em;
+        color: white;
+        text-align: center;
+    }
+
+    .face.face1 .content a {
+        transition: .5s;
+    }
+
+    .face.face2 {
+        position: relative;
+        background: whitesmoke;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        box-sizing: border-box;
+        box-shadow: 0 20px 50px rgba(0,0,0,.8);
+        transform: translateY(-100px);
+    }
+
+    .card:hover .face.face2 {
+        transform: translateY(0);
+    }
+
+   
+</style>
+
+<script src="https://kit.fontawesome.com/95a02bd20d.js"></script>
+
+@{
+    ViewData["Title"] = "Products";
+}
+
+<h1>Products</h1>
+
+<div class="row">
+    @foreach (var item in Model)
+    {
+                <div class="card">
+                    <div class="face face1">
+                        <div class="content">
+                            <img src="/media/products/@item.Image" class="img-fluid" />
+                        </div>
+                    </div>
+                    <div class="face face2">
+                        <div class="content">
+                            <h4>@item.Name</h4>
+                            <p>
+                                @Html.Raw(item.Description)
+                            </p>
+                            
+                                <b>@item.Price.ToString("C2")</b>
+                            
+                            <p>
+                                <a class="btn btn-primary" asp-controller="Cart" asp-action="Add" asp-route-id="@item.Id">Add to cart</a>
+                            </p>
+                        </div>
+                    </div>
+                </div>
+       
+    }
+
+    @if(ViewBag.TotalPages > 1)
+    {
+        <div class="d-flex w-100 justify-content-center">
+            <pagination page-count="@ViewBag.TotalPages"
+                    page-target="/products/@ViewBag.CategorySlug"
+                    page-number="@ViewBag.PageNumber"
+                    page-range="@ViewBag.PageRange">
+            </pagination>
+        </div>
+    }
+
+</div>

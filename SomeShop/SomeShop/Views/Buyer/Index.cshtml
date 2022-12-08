@@ -1,0 +1,51 @@
+﻿@model IEnumerable<Buyer>
+
+@if (User.Identity?.IsAuthenticated ?? false)
+{
+
+}
+else
+{
+    Context.Response.Redirect("/Account/Login");
+}
+
+@{
+    ViewData["Title"] = "ListOfBuyers";
+}
+
+<h1>List Of Buyers</h1>
+
+<p>
+    <a asp-action="Create">Create New Order</a>
+</p>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>FullName</th>
+            <th>PhoneNumber</th>
+            <th>Adress</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @item.FullName
+                </td>
+                <td>
+                    @item.PhoneNumber
+                </td>
+                <td>
+                    @item.Adress
+                </td>
+                <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="confirmDeletion">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
